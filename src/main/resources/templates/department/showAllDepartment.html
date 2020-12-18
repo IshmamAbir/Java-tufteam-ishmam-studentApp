@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Show All Department</title>
+</head>
+<body>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Code</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="department : ${departmentDtoList}">
+        <tr>
+            <td th:text="${department.departmentId}" ></td>
+            <td th:text="${department.departmentName}" ></td>
+            <td th:text="${department.departmentCode}" ></td>
+            <td>
+                <a th:href="@{'/department/update/'+${department.departmentId}}">Update</a>
+                <a th:href="@{'/department/delete/'+${department.departmentId}}">Delete</a>
+            </td>
+        </tr>
+    </th:block>
+
+    </tbody>
+</table>
+<a th:href="@{/department/add}">add</a>
+
+</body>
+</html>

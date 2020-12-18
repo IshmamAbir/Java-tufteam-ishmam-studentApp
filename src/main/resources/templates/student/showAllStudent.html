@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Show All Student</title>
+</head>
+<body>
+<h2>***** Show All Student *****</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>Department</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="student : ${studentDtoList}">
+        <tr>
+            <td th:text="${student.studentId}" ></td>
+            <td th:text="${student.studentName}" ></td>
+            <td th:text="${student.studentAge}" ></td>
+            <td th:text="${student.studentGender}" ></td>
+            <td th:text="-- -- --" ></td>
+            <td>
+                <a th:href="@{'/student/update/'+${student.studentId}}">Update</a>
+                <a th:href="@{'/student/delete/'+${student.studentId}}">Delete</a>
+            </td>
+        </tr>
+    </th:block>
+
+    </tbody>
+</table>
+<a th:href="@{/department/add}">add</a>
+
+</body>
+</html>
