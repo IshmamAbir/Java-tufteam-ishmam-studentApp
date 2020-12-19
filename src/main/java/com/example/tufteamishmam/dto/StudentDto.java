@@ -8,8 +8,8 @@ import javax.persistence.Column;
 public class StudentDto {
     private long studentId;
     private String studentName;
-    private String studentAge;
+    private int studentAge;
     private String studentGender;
-//    private Department department;
+    private long department;
     private boolean enable=true;
 }

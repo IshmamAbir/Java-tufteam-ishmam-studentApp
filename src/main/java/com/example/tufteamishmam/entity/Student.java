@@ -13,11 +13,12 @@ public class Student {
     @Column
     private String studentName;
     @Column
-    private String studentAge;
+    private int studentAge;
     @Column
     private String studentGender;
-    /*@Column
-    private Department department;*/
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "departmentId")
+    private Department department;
     @Column
     private boolean enable=true;
 }

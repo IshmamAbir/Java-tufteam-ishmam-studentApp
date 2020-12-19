@@ -1,14 +1,15 @@
 package com.example.tufteamishmam.controller;
 
+import com.example.tufteamishmam.dto.DepartmentDto;
 import com.example.tufteamishmam.dto.StudentDto;
+import com.example.tufteamishmam.entity.Department;
 import com.example.tufteamishmam.entity.Student;
 import com.example.tufteamishmam.service.StudentService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +37,48 @@ public class StudentController {
 
         model.addAttribute("studentDto",new StudentDto());
 
+        List<Department> departmentList=studentService.getAllDepartment();
+        List<DepartmentDto> departmentDtoList= getDepartmentDtoList(departmentList);
+        model.addAttribute("departmentDtoList",departmentDtoList);
+
         return "student/add-student";
     }
 
+    @PostMapping("/save")
+    public String saveStudent(@ModelAttribute StudentDto studentDto){
+        Student student=studentService.findStudentById(studentDto.getStudentId());
+        BeanUtils.copyProperties(studentDto,student);
+        Department department=studentService.findDepartmentById(studentDto.getDepartment());
+        student.setDepartment(department);
+        studentService.saveStudent(student);
+        return "redirect:/student/show-all";
+    }
 
+    @GetMapping("/update/{id}")
+    public String updateStudent(@PathVariable("id") long id,Model model){
+        Student student=studentService.findStudentById(id);
+        StudentDto studentDto=new StudentDto();
+        BeanUtils.copyProperties(student,studentDto);
+        model.addAttribute("studentDto",studentDto);
+        model.addAttribute("genderList",getGenderList());
+        List<DepartmentDto> departmentDtoList= getDepartmentDtoList(studentService.getAllDepartment());
+        model.addAttribute("departmentDtoList",departmentDtoList);
+
+        return "student/add-student";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteStudent(@PathVariable("id") long id,Model model){
+        Student student=studentService.findStudentById(id);
+        StudentDto studentDto=new StudentDto();
+        BeanUtils.copyProperties(student,studentDto);
+
+        studentDto.setEnable(false);
+        BeanUtils.copyProperties(studentDto,student);
+        studentService.saveStudent(student);
+
+        return "redirect:/student/show-all";
+    }
 
 
 
@@ -63,6 +102,15 @@ public class StudentController {
             studentDtoList.add(studentDto);
         }
         return studentDtoList;
+    }
+    public List<DepartmentDto> getDepartmentDtoList(List<Department> departmentList){
+        List<DepartmentDto> departmentDtoList = new ArrayList<>();
+        for (Department department:departmentList) {
+            DepartmentDto departmentDto=new DepartmentDto();
+            BeanUtils.copyProperties(department,departmentDto);
+            departmentDtoList.add(departmentDto);
+        }
+        return departmentDtoList;
     }
 
 }

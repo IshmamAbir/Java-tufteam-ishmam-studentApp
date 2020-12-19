@@ -17,6 +17,7 @@ public class DepartmentService {
 
     public List<Department> showAllDepartment() {
         return repo.findAllByEnableTrue();
+
     }
 
     public Department saveDepartmentObjectCheck(DepartmentDto departmentDto) {

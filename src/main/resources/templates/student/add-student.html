@@ -14,9 +14,16 @@
         <input type="radio" th:value="${gender}" th:field="*{studentGender}">
         <label th:text="${gender}"></label><br>
     </th:block>
-
+    <br>
     Student Age = <input th:field="*{studentAge}"><br>
-<!--    Department = <input th:field="*{department}"><br>-->
+    Department =
+    <select th:field="*{department}">
+        <option  value="0">- - Select Department - -</option>
+        <th:block th:each="department:${departmentDtoList}" >
+            <option th:value="${department.getDepartmentId()}" th:text="${department.getDepartmentName()}"></option>
+        </th:block>
+    </select>
+
     <button type="submit">Save</button>
 </form>
 </body>
