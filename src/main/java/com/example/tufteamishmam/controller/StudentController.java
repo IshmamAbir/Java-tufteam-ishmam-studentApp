@@ -23,9 +23,7 @@ public class StudentController {
 
     @GetMapping("/show-all")
     public String showStudent(Model model){
-        List<Student> studentList = studentService.findAllStudent();
-        List<StudentDto> studentDtoList=getStudentDtoList(studentList);
-        model.addAttribute("studentDtoList",studentDtoList);
+        model.addAttribute("studentDtoList",studentService.findAllStudent());
 
         return "student/showAllStudent";
     }
@@ -37,32 +35,33 @@ public class StudentController {
 
         model.addAttribute("studentDto",new StudentDto());
 
-        List<Department> departmentList=studentService.getAllDepartment();
+        /*List<Department> departmentList=studentService.getAllDepartment();
         List<DepartmentDto> departmentDtoList= getDepartmentDtoList(departmentList);
-        model.addAttribute("departmentDtoList",departmentDtoList);
+        model.addAttribute("departmentDtoList",departmentDtoList);*/
+        model.addAttribute("departmentDtoList",studentService.getAllDepartment());
 
         return "student/add-student";
     }
 
     @PostMapping("/save")
     public String saveStudent(@ModelAttribute StudentDto studentDto){
-        Student student=studentService.findStudentById(studentDto.getStudentId());
-        BeanUtils.copyProperties(studentDto,student);
-        Department department=studentService.findDepartmentById(studentDto.getDepartment());
-        student.setDepartment(department);
+        StudentDto dto=studentService.findStudentById(studentDto.getStudentId());
+
+        DepartmentDto departmentDto=studentService.findDepartmentById(studentDto.getDepartment());
+        dto.setDepartment(departmentDto);
         studentService.saveStudent(student);
         return "redirect:/student/show-all";
     }
 
     @GetMapping("/update/{id}")
     public String updateStudent(@PathVariable("id") long id,Model model){
-        Student student=studentService.findStudentById(id);
-        StudentDto studentDto=new StudentDto();
-        BeanUtils.copyProperties(student,studentDto);
+        StudentDto studentDto=studentService.findStudentById(id);
+
         model.addAttribute("studentDto",studentDto);
         model.addAttribute("genderList",getGenderList());
-        List<DepartmentDto> departmentDtoList= getDepartmentDtoList(studentService.getAllDepartment());
-        model.addAttribute("departmentDtoList",departmentDtoList);
+        /*List<DepartmentDto> departmentDtoList= getDepartmentDtoList(studentService.getAllDepartment());
+        model.addAttribute("departmentDtoList",departmentDtoList);*/
+        model.addAttribute("departmentDtoList",studentService.getAllDepartment());
 
         return "student/add-student";
     }
@@ -94,7 +93,7 @@ public class StudentController {
         return gender;
     }
 
-    public List<StudentDto> getStudentDtoList(List<Student> studentList){
+    /*public List<StudentDto> getStudentDtoList(List<Student> studentList){
         List<StudentDto> studentDtoList=new ArrayList<>();
         for (Student student:studentList) {
             StudentDto studentDto=new StudentDto();
@@ -102,8 +101,8 @@ public class StudentController {
             studentDtoList.add(studentDto);
         }
         return studentDtoList;
-    }
-    public List<DepartmentDto> getDepartmentDtoList(List<Department> departmentList){
+    }*/
+    /*public List<DepartmentDto> getDepartmentDtoList(List<Department> departmentList){
         List<DepartmentDto> departmentDtoList = new ArrayList<>();
         for (Department department:departmentList) {
             DepartmentDto departmentDto=new DepartmentDto();
@@ -111,6 +110,6 @@ public class StudentController {
             departmentDtoList.add(departmentDto);
         }
         return departmentDtoList;
-    }
+    }*/
 
 }
