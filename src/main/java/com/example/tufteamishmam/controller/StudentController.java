@@ -23,7 +23,7 @@ public class StudentController {
 
     @GetMapping("/show-all")
     public String showStudent(Model model){
-        model.addAttribute("studentDtoList",studentService.findAllStudent());
+        model.addAttribute("studentDtoList",studentService.showAllStudent());
 
         return "student/showAllStudent";
     }
@@ -34,10 +34,6 @@ public class StudentController {
         model.addAttribute("genderList",gender);
 
         model.addAttribute("studentDto",new StudentDto());
-
-        /*List<Department> departmentList=studentService.getAllDepartment();
-        List<DepartmentDto> departmentDtoList= getDepartmentDtoList(departmentList);
-        model.addAttribute("departmentDtoList",departmentDtoList);*/
         model.addAttribute("departmentDtoList",studentService.getAllDepartment());
 
         return "student/add-student";
@@ -45,22 +41,15 @@ public class StudentController {
 
     @PostMapping("/save")
     public String saveStudent(@ModelAttribute StudentDto studentDto){
-        StudentDto dto=studentService.findStudentById(studentDto.getStudentId());
-
-        DepartmentDto departmentDto=studentService.findDepartmentById(studentDto.getDepartment());
-        dto.setDepartment(departmentDto);
-        studentService.saveStudent(student);
+        studentService.saveStudent(studentDto);
         return "redirect:/student/show-all";
     }
 
     @GetMapping("/update/{id}")
     public String updateStudent(@PathVariable("id") long id,Model model){
         StudentDto studentDto=studentService.findStudentById(id);
-
         model.addAttribute("studentDto",studentDto);
         model.addAttribute("genderList",getGenderList());
-        /*List<DepartmentDto> departmentDtoList= getDepartmentDtoList(studentService.getAllDepartment());
-        model.addAttribute("departmentDtoList",departmentDtoList);*/
         model.addAttribute("departmentDtoList",studentService.getAllDepartment());
 
         return "student/add-student";
@@ -68,13 +57,9 @@ public class StudentController {
 
     @GetMapping("/delete/{id}")
     public String deleteStudent(@PathVariable("id") long id,Model model){
-        Student student=studentService.findStudentById(id);
-        StudentDto studentDto=new StudentDto();
-        BeanUtils.copyProperties(student,studentDto);
-
+        StudentDto studentDto=studentService.findStudentById(id);
         studentDto.setEnable(false);
-        BeanUtils.copyProperties(studentDto,student);
-        studentService.saveStudent(student);
+        studentService.saveStudent(studentDto);
 
         return "redirect:/student/show-all";
     }

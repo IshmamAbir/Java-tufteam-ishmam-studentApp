@@ -4,6 +4,7 @@ import com.example.tufteamishmam.dto.DepartmentDto;
 import com.example.tufteamishmam.dto.StudentDto;
 import com.example.tufteamishmam.entity.Department;
 import com.example.tufteamishmam.entity.Student;
+import com.example.tufteamishmam.exception.ResourceNotFoundException;
 import com.example.tufteamishmam.repository.DepartmentRepository;
 import com.example.tufteamishmam.repository.StudentRepository;
 import org.springframework.beans.BeanUtils;
@@ -34,18 +35,25 @@ public class StudentService {
 
     public StudentDto findStudentById(long id) {
         Optional<Student> studentOptional= repo.findById(id);
+        if (studentOptional.isEmpty()){
+            throw new ResourceNotFoundException("  User not found with the id :"+id+" to delete");
+        }
+        Student student=studentOptional.get();
+        StudentDto studentDto=new StudentDto();
+        BeanUtils.copyProperties(student,studentDto);
+        return studentDto;
+    }
+
+    public void saveStudent(StudentDto stdto) {
+        Optional<Student> studentOptional= repo.findById(stdto.getStudentId());
         Student student=null;
         if (studentOptional.isPresent()){
             student = studentOptional.get();
         }else {
             student = new Student();
         }
-        StudentDto studentDto=new StudentDto();
-        BeanUtils.copyProperties(student,studentDto);
-        return studentDto;
-    }
-
-    public void saveStudent(Student student) {
+        BeanUtils.copyProperties(stdto,student);
+        student.setDepartment(departmentRepo.getOne(stdto.getDepartment()));
         repo.save(student);
     }
 
@@ -60,11 +68,16 @@ public class StudentService {
         return departmentDtoList;
     }
 
-    public DepartmentDto findDepartmentById(long department) {
-        Optional<Department> optionalDepartment= departmentRepo.findById(department);
-        Department department1=optionalDepartment.get();
-        DepartmentDto departmentDto=new DepartmentDto();
-        BeanUtils.copyProperties(department1,departmentDto);
-        return departmentDto;
+    public List<StudentDto> showAllStudent() {
+        List<Student> studentList= repo.findAllByEnableTrue();
+        List<StudentDto> studentDtoList = new ArrayList<>();
+        for (Student student:studentList) {
+            StudentDto studentDto=new StudentDto();
+            BeanUtils.copyProperties(student,studentDto);
+            studentDto.setDepartmentName(student.getDepartment().getDepartmentName());
+            studentDtoList.add(studentDto);
+        }
+        return studentDtoList;
     }
+
 }

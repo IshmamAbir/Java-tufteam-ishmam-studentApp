@@ -24,7 +24,7 @@
             <td th:text="${student.studentName}" ></td>
             <td th:text="${student.studentAge}" ></td>
             <td th:text="${student.studentGender}" ></td>
-            <td th:text="${student.department.getDepartmentName}" ></td>
+            <td th:text="${student.departmentName}" ></td>
             <td>
                 <a th:href="@{'/student/update/'+${student.studentId}}">Update</a>
                 <a th:href="@{'/student/delete/'+${student.studentId}}">Delete</a>

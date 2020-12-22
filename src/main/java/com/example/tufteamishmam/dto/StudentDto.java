@@ -11,5 +11,6 @@ public class StudentDto {
     private int studentAge;
     private String studentGender;
     private long department;
+    private String departmentName;
     private boolean enable=true;
 }
