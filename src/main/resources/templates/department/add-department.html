@@ -44,7 +44,7 @@
                         <div class="col-xl-3 col-lg-2">
                             <div class="logo">
                                 <a href="#">
-                                    <img src="img/logo.png" alt="">
+                                    <img style="height: 70px;width: 70px" src="img/logo.png" alt=""> <b class="submenu">Student WebApp</b>
                                 </a>
                             </div>
                         </div>
@@ -53,16 +53,16 @@
                                 <nav>
                                     <ul id="navigation">
 
-                                        <li><a href="#">Student Section<i class="ti-angle-down"></i></a>
+                                        <li><a href="#">Student Section  <i class="ti-angle-down"></i></a>
                                             <ul class="submenu">
-                                                <li><a href="apply.html">Show All Students</a></li>
-                                                <li><a href="elements.html">Add New Student</a></li>
+                                                <li><a th:href="@{/student/show-all}">Show All Students</a></li>
+                                                <li><a th:href="@{/student/add}">Add New Student</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="#"> Department Section <i class="ti-angle-down"></i></a>
+                                        <li><a href="#"> Department Section  <i class="ti-angle-down"></i></a>
                                             <ul class="submenu">
-                                                <li><a href="blog.html">Add New Department</a></li>
-                                                <li><a href="single-blog.html">Show Department List</a></li>
+                                                <li><a th:href="@{/department/add}">Add New Department</a></li>
+                                                <li><a th:href="@{/department/add}">Show Department List</a></li>
                                             </ul>
                                         </li>
 
@@ -88,13 +88,13 @@
     <div class="single_slider  d-flex align-items-center slider_bg_1">
         <div class="container">
             <div class="row align-items-center justify-content-center">
-                <div class="col-lg-5 col-md-6">
+                <div class="col-lg-4 col-md-4">
                     <div class="slider_text">
                         <h3 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".1s">Add a New Department</h3>
 
                     </div>
                 </div>
-                <div class="col-lg-7 col-md-6">
+                <div class="col-lg-8 col-md-8">
 
                     <form th:action="@{/department/save}" method="post" th:object="${departmentDto}" class="payment_form white-bg wow fadeInDown" data-wow-duration="1.2s" data-wow-delay=".2s">
                         <div class="info text-center">
