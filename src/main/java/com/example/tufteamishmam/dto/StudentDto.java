@@ -12,5 +12,8 @@ public class StudentDto {
     private String studentGender;
     private long department;
     private String departmentName;
+    private long cityId;
+    private String cityName;
+    private String cityCode;
     private boolean enable=true;
 }

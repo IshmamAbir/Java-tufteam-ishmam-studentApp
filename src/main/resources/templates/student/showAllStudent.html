@@ -157,9 +157,10 @@
                                 <div class="table-head">
                                     <div class="country">Student Id</div>
                                     <div class="country">Student Name</div>
-                                    <div class="visit">Student Age</div>
-                                    <div class="visit">Gender</div>
-                                    <div class="visit">Department</div>
+                                    <div class="country">Student Age</div>
+                                    <div class="country">Gender</div>
+                                    <div class="country">Department</div>
+                                    <div class="country">City</div>
                                     <div class="percentage">Action</div>
 
 
@@ -170,7 +171,8 @@
                                         <div class="country  align-items-center justify-content-center"  th:text="${student.studentName}"> </div>
                                         <div class="country  align-items-center justify-content-center"  th:text="${student.studentAge}"> </div>
                                         <div class="country  align-items-center justify-content-center"  th:text="${student.studentGender}"> </div>
-                                        <div class="visit  align-items-center justify-content-center"   th:text="${student.departmentName}"></div>
+                                        <div class="country  align-items-center justify-content-center"   th:text="${student.departmentName}"></div>
+                                        <div class="country  align-items-center justify-content-center"   th:text="${student.cityName}+' ('+${student.cityCode}+')'"></div>
                                         <div class="percentage  align-items-center justify-content-center">
                                             <div class=" ">
                                                 <a  th:href="@{'/student/update/'+${student.studentId}}" class="genric-btn info-border circle">Update</a>

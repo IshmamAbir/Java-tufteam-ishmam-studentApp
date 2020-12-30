@@ -5,6 +5,7 @@ import com.example.tufteamishmam.dto.StudentDto;
 import com.example.tufteamishmam.entity.Department;
 import com.example.tufteamishmam.entity.Student;
 import com.example.tufteamishmam.exception.ResourceNotFoundException;
+import com.example.tufteamishmam.repository.CityRepository;
 import com.example.tufteamishmam.repository.DepartmentRepository;
 import com.example.tufteamishmam.repository.StudentRepository;
 import org.springframework.beans.BeanUtils;
@@ -21,6 +22,8 @@ public class StudentService {
     private StudentRepository repo;
     @Autowired
     private DepartmentRepository departmentRepo;
+    @Autowired
+    private CityRepository cityRepository;
 
     public List<StudentDto> findAllStudent() {
         List<Student> studentList= repo.findAllByEnableTrue();
@@ -54,6 +57,7 @@ public class StudentService {
         }
         BeanUtils.copyProperties(stdto,student);
         student.setDepartment(departmentRepo.getOne(stdto.getDepartment()));
+        student.setCity(cityRepository.getOne(stdto.getCityId()));
         repo.save(student);
     }
 
@@ -75,6 +79,8 @@ public class StudentService {
             StudentDto studentDto=new StudentDto();
             BeanUtils.copyProperties(student,studentDto);
             studentDto.setDepartmentName(student.getDepartment().getDepartmentName());
+            studentDto.setCityName(student.getCity().getCityName());
+            studentDto.setCityCode(student.getCity().getCityCode());
             studentDtoList.add(studentDto);
         }
         return studentDtoList;

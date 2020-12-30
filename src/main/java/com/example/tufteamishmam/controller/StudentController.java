@@ -4,6 +4,7 @@ import com.example.tufteamishmam.dto.DepartmentDto;
 import com.example.tufteamishmam.dto.StudentDto;
 import com.example.tufteamishmam.entity.Department;
 import com.example.tufteamishmam.entity.Student;
+import com.example.tufteamishmam.service.CityService;
 import com.example.tufteamishmam.service.StudentService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ public class StudentController {
 
     @Autowired
     StudentService studentService;
+    @Autowired
+    private CityService cityService;
 
     @GetMapping("/show-all")
     public String showStudent(Model model){
@@ -35,6 +38,7 @@ public class StudentController {
 
         model.addAttribute("studentDto",new StudentDto());
         model.addAttribute("departmentDtoList",studentService.getAllDepartment());
+        model.addAttribute("cityListDto",cityService.showAllCity());
 
         return "student/add-student";
     }
@@ -51,6 +55,7 @@ public class StudentController {
         model.addAttribute("studentDto",studentDto);
         model.addAttribute("genderList",getGenderList());
         model.addAttribute("departmentDtoList",studentService.getAllDepartment());
+        model.addAttribute("cityListDto",cityService.showAllCity());
 
         return "student/add-student";
     }

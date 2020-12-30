@@ -19,6 +19,9 @@ public class Student {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "departmentId")
     private Department department;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cityId")
+    private City city;
     @Column
     private boolean enable=true;
 }

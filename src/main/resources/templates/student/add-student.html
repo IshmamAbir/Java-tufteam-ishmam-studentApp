@@ -178,6 +178,16 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-lg-12">
+                                    <div class="single_input">
+                                        <select class="wide form-control" th:field="*{cityId}">
+                                            <option  value="0">- - Select City - -</option>
+                                            <th:block th:each="city:${cityListDto}" >
+                                                <option th:value="${city.getCityId()}" th:text="${city.getCityName()}+' ('+${city.getCityCode}+')'"></option>
+                                            </th:block>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
