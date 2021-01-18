@@ -106,7 +106,7 @@
                                 <input type="hidden" th:field="*{departmentId}">
                                 <div class="col-lg-12">
                                     <div class="single_input">
-                                        <input class="wide form-control pb-2" type="text" th:field="*{departmentName}" placeholder="Department name">
+                                        <input class=" form-control pb-2" type="text" th:field="*{departmentName}" placeholder="Department name">
                                         <!--<select class="wide">
                                             <option data-display="Amount">Amount</option>
                                             <option value="1">$10</option>
@@ -127,6 +127,51 @@
                                         </select>-->
                                     </div>
                                 </div>
+
+
+                                <div class="col-lg-12">
+                                    <div class="single_input">
+                                        <select class="wide form-control" th:field="*{studentIdList}" multiple>
+                                            <option  value="0">- - Select All Student - -</option>
+                                            <th:block th:each="city:${studentListDto}" >
+                                                <option th:value="${city.getStudentId()}" th:text="${city.getStudentName()}"></option>
+                                            </th:block>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="single_input">
+                                        <select class="wide form-control" th:field="*{courseIdList}" multiple>
+                                            <option  value="0">- - Select All Course - -</option>
+                                            <th:block th:each="city:${courseListDto}" >
+                                                <option th:value="${city.getCourseId()}" th:text="${city.getCourseName()}+' ('+${city.getCourseCode}+')'"></option>
+                                            </th:block>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <ul>
+                                    <li th:each="feat : ${allFeatures}">
+                                        <input type="checkbox" th:field="*{features}" th:value="${feat}" />
+                                        <label th:for="${#ids.prev('features')}"
+                                               th:text="#{${'seedstarter.feature.' + feat}}">Heating</label>
+                                    </li>
+                                </ul>
+
+
+                                <!--<div class="col-lg-12">
+                                    <div class="single_input">
+                                        <input type="text" class="wide form-control pb-2" th:field="*{}" placeholder="Department Code">
+                                        &lt;!&ndash;<select class="wide">
+                                            <option data-display="Month">Month</option>
+                                            <option value="1">3 Month</option>
+                                            <option value="2">6 Month</option>
+                                            <option value="3">9 Month</option>
+                                            <option value="4">12 Month</option>
+                                        </select>&ndash;&gt;
+                                    </div>
+                                </div>-->
                             </div>
                         </div>
 

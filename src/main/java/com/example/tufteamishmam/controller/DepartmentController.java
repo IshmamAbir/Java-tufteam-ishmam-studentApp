@@ -1,8 +1,14 @@
 package com.example.tufteamishmam.controller;
 
+import com.example.tufteamishmam.dto.CourseDto;
 import com.example.tufteamishmam.dto.DepartmentDto;
+import com.example.tufteamishmam.dto.StudentDto;
+import com.example.tufteamishmam.entity.Course;
 import com.example.tufteamishmam.entity.Department;
+import com.example.tufteamishmam.entity.Student;
+import com.example.tufteamishmam.service.CourseService;
 import com.example.tufteamishmam.service.DepartmentService;
+import com.example.tufteamishmam.service.StudentService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +25,10 @@ public class DepartmentController {
 
     @Autowired
     private DepartmentService departmentService;
+    @Autowired
+    private CourseService courseService;
+    @Autowired
+    private StudentService studentService;
 
     @GetMapping("/showAll")
     public String showAllDepartment(Model model){
@@ -37,6 +47,8 @@ public class DepartmentController {
     @GetMapping("/add")
     public String addDepartment(Model model){
         model.addAttribute("departmentDto",new DepartmentDto());
+        model.addAttribute("courseListDto",courseService.getAllCourse());
+        model.addAttribute("studentListDto",studentService.findAllStudent());
         return "department/add-department";
     }
 
@@ -44,6 +56,24 @@ public class DepartmentController {
     public String saveDepartment(@ModelAttribute DepartmentDto departmentDto){
         Department department = departmentService.saveDepartmentObjectCheck(departmentDto);
         BeanUtils.copyProperties(departmentDto,department);
+        List<Student> studentList = new ArrayList<>();
+        for (long studentId : departmentDto.getStudentIdList()) {
+            StudentDto studentDto = studentService.findStudentById(studentId);
+            Student student=new Student();
+            BeanUtils.copyProperties(studentDto,student);
+            studentList.add(student);
+        }
+        department.setStudentList(studentList);
+        List<Course> courseList = new ArrayList<>();
+        for (long subjectId : departmentDto.getCourseIdList()) {
+            CourseDto courseDto = courseService.findById(subjectId);
+            Course course=new Course();
+            BeanUtils.copyProperties(courseDto,course);
+            courseList.add(course);
+        }
+        department.setCourseList(courseList);
+
+
         departmentService.save(department);
         return "redirect:/department/showAll";
     }

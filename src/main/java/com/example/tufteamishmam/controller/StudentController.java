@@ -37,7 +37,7 @@ public class StudentController {
         model.addAttribute("genderList",gender);
 
         model.addAttribute("studentDto",new StudentDto());
-        model.addAttribute("departmentDtoList",studentService.getAllDepartment());
+//        model.addAttribute("departmentDtoList",studentService.getAllDepartment());
         model.addAttribute("cityListDto",cityService.showAllCity());
 
         return "student/add-student";
@@ -54,7 +54,7 @@ public class StudentController {
         StudentDto studentDto=studentService.findStudentById(id);
         model.addAttribute("studentDto",studentDto);
         model.addAttribute("genderList",getGenderList());
-        model.addAttribute("departmentDtoList",studentService.getAllDepartment());
+//        model.addAttribute("departmentDtoList",studentService.getAllDepartment());
         model.addAttribute("cityListDto",cityService.showAllCity());
 
         return "student/add-student";

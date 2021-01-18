@@ -8,6 +8,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class StaticResourceConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**","/student/**","/department/**","/student/update/**").addResourceLocations("classpath:/static/").setCachePeriod(999999999);
+        registry.addResourceHandler("/**","/student/**","/department/**","/department/update/**","/student/update/**").addResourceLocations("classpath:/static/").setCachePeriod(999999999);
     }
 }

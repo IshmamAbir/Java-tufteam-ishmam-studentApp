@@ -56,7 +56,7 @@ public class StudentService {
             student = new Student();
         }
         BeanUtils.copyProperties(stdto,student);
-        student.setDepartment(departmentRepo.getOne(stdto.getDepartment()));
+//        student.setDepartment(departmentRepo.getOne(stdto.getDepartment()));
         student.setCity(cityRepository.getOne(stdto.getCityId()));
         repo.save(student);
     }
@@ -78,12 +78,13 @@ public class StudentService {
         for (Student student:studentList) {
             StudentDto studentDto=new StudentDto();
             BeanUtils.copyProperties(student,studentDto);
-            studentDto.setDepartmentName(student.getDepartment().getDepartmentName());
+//            studentDto.setDepartmentName(student.getDepartment().getDepartmentName());
             studentDto.setCityName(student.getCity().getCityName());
             studentDto.setCityCode(student.getCity().getCityCode());
             studentDtoList.add(studentDto);
         }
         return studentDtoList;
     }
+
 
 }
